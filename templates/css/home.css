@@ -1,0 +1,304 @@
+/* CSS Styling */
+
+.mainfont{
+    font-family: "Poppins";
+}
+.titleBar{
+    margin-left: 20px;
+    margin-right: 20px;
+    display: flex;
+    font-family: "Poppins", sans-serif;
+}
+.titleContainer{
+    display: flex;
+    justify-content: space-evenly;
+    border-radius: 10px;
+    background-color: #F1EEDF;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, .25);
+    font-family: "Poppins", sans-serif;
+
+}
+.subTitleContainer{
+    border-radius: 30px;
+    background-color: #F1EEDF;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-top: 13px;
+    box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, .25);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+}
+.hamburger{
+    padding-top: 5px;
+    border: 1px solid transparent;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: #B1AC88;
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+    transition: transform 0.5s;
+}
+.hamburger:hover{
+    border: 1px solid black;
+    transform: scale(1.05);
+
+}
+.close{
+    border: 1px solid transparent;
+    font-size: 20px;
+    border-radius: 5px;
+    background-color: #B1AC88;
+    width: 35px;
+    height: 35px;
+    transition: transform 0.5s;
+}
+.close:hover{
+    border: 1px solid black;
+    transform: scale(1.05);
+}
+.sideNav{
+    width:0%; 
+    height:100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    border-radius: 10px;
+    background-color: #F1EEDF;
+    box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, .25);
+    transition: 0.5s;
+    overflow-x: hidden;
+    font-family: "Poppins", sans-serif;
+}
+.sideNav .closebtn{
+    position: absolute;
+    padding-top: 10px;
+    right: 10px;
+    font-size: 20px;
+    float: right;
+}
+#map{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    right: 0;
+    z-index: -1;
+}
+#instructions {
+    overflow-y: scroll;
+    font-family: "Poppins", sans-serif;
+}
+
+.rContained {
+    right: 0; 
+    top: 0; 
+    bottom: 0; 
+    width: 20%; 
+    height: 100%; 
+    position: absolute; 
+    justify-content: space-evenly;
+    display: flex; 
+    flex-direction: column;
+}
+
+.toggleContainer{
+    min-height: fit-content;
+    border-radius: 10px;
+    background-color: #F1EEDF;
+    padding: 10px;
+    box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, .25);
+    font-family: "Poppins", sans-serif;
+    margin: auto;
+    width: 245px;
+}
+
+.formContainer{
+    min-height: fit-content;
+    border-radius: 10px;
+    background-color: #F1EEDF;
+    padding: 10px;
+    box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, .25);
+    font-family: "Poppins", sans-serif;
+    margin: auto;
+    width: 245px;
+}
+
+
+.togdisplay{
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+}
+
+.mapboxgl-marker:hover {
+    cursor: pointer;
+}
+
+.navbarbtn{
+    background-color: #B1AC88;
+    border: none;
+    border-radius: 25px;
+}
+
+#id_description {
+    width: 180px;
+    height: 90px;
+}
+
+.toggle {
+    position: relative;
+    color: #F1EEDF;
+    height: 6px;
+    width: 65px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: black;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.toggle::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #F1EEDF;
+    border: 5px solid black;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.toggle.active::before {
+    left: calc(100% - 35px);
+    background-color: black;
+    border-color: #F1EEDF;
+}
+.toggle2 {
+    position: relative;
+    color: #F1EEDF;
+    height: 6px;
+    width: 65px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: black;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.toggle2::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #F1EEDF;
+    border: 5px solid black;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.toggle2.active::before {
+    left: calc(100% - 35px);
+    background-color: black;
+    border-color: #F1EEDF;
+}
+.toggle3 {
+    position: relative;
+    color: #F1EEDF;
+    height: 6px;
+    width: 65px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: black;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.toggle3::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #F1EEDF;
+    border: 5px solid black;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.toggle3.active::before {
+    left: calc(100% - 35px);
+    background-color: black;
+    border-color: #F1EEDF;
+}
+.toggle4 {
+    position: relative;
+    color: #F1EEDF;
+    height: 6px;
+    width: 65px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: black;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.toggle4::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #F1EEDF;
+    border: 5px solid black;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.toggle4.active::before {
+    left: calc(100% - 35px);
+    background-color: black;
+    border-color: #F1EEDF;
+}
+.toggle5 {
+    position: relative;
+    color: #F1EEDF;
+    height: 6px;
+    width: 65px;
+    cursor: pointer;
+    border-radius: 25px;
+    background-color: black;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+.toggle5::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: #F1EEDF;
+    border: 5px solid black;
+    transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.toggle5.active::before {
+    left: calc(100% - 35px);
+    background-color: black;
+    border-color: #F1EEDF;
+}
+
+.mapboxgl-popup-content {
+    background-color: #F1EEDF;
+    font-family: "Poppins", sans-serif;
+}
+
+.centered{
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-evenly; 
+    align-items: center;
+    /* class="container" */
+}

@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    {% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YellowMap</title>
+
+    <!-- Bootstram Icons Link-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <!-- Mapbox Link-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+
+    <!-- FontAwesome Icons Link-->
+    <script src="https://kit.fontawesome.com/564ecc7c9c.js" crossorigin="anonymous"></script>
+
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="/templates/css/home.css" type="text/css">
+
+    <!-- JavaScript -->
+    <script src="/templates/javascript/home.js" type="text/javascript" defer></script>
+
+</head>
+
+<!-- Title Bar -->
+<body style="background-color: rgb(194, 194, 194);">
+    <div class="titleBar">
+        <div class="titleContainer">
+            <h2><button class="hamburger" type="button" onclick="openNav()"><i class="bi bi-list"></i></button><i class="fa-solid fa-map-location-dot" style="margin-right: 5px;"></i>YellowMap</i></h2>
+        </div>
+        &ensp;&ensp;&ensp;
+        <div>
+            <div class="subTitleContainer">
+                <h7 class="mainFont"><a href="{% url 'post_page' %}" style="text-decoration: none; color: black;"><i class="fa-solid fa-location-dot" style="margin-right: 5px;"></i>Posts</a></h7>
+            </div>
+        </div>
+        &ensp;&ensp;&ensp;
+        <div>
+            <div class="subTitleContainer" style="width: 570px;">
+                <h7 class="mainFont"><i class="fa-solid fa-location-arrow" style="margin-right: 5px;"></i>Cursor Coordinates:</h7>
+                <h7 id="curcoor"></h7>
+            </div>
+        </div>
+    
+    <p></p>
+
+    <!-- Form Container -->
+    <div class="rContained">
+        <div class="formContainer container">
+            <div style="padding-bottom: 20px;">
+                <h3 style="text-align: center;">Post Form</h3>
+                <div style="margin-left: 10px;" class="centered">
+                    <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <p></p>
+                    <input type="submit"/>
+                    </form>
+                </div> 
+            </div>
+        </div>
+    
+        <!-- Toggle Container -->
+        <div class="toggleContainer container">
+            <h3 style="text-align: center;">Toggle Map Features</h3>
+            <div class="container centered">
+                <div style="display: flex; flex-direction: row;" class="container">
+                    <button style="width: 100px; height: 50px;" class="navbarbtn">Park Highlight</button> 
+                    <div style="padding-left: 40px;" class="centered">
+                        <div class="toggle"></div>
+                        <script>
+                            const toggleBtn = document.querySelector(".toggle");
+                            toggleBtn.addEventListener("click", () => {
+                                toggleBtn.classList.toggle("active");
+                                toggleMapOutline();
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div style="height: 8px;"></div>
+                <div style="display: flex; flex-direction: row;" class="container">
+                    <button style="width: 100px; height: 50px;" class="navbarbtn">Trails</button>
+                    <div style="padding-left: 40px;" class="centered">
+                        <div class="toggle2"></div>
+                        <script>
+                            const toggleBtn2 = document.querySelector(".toggle2");
+                            toggleBtn2.addEventListener("click", () => {
+                                toggleBtn2.classList.toggle("active");
+                                toggleTrails();
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div style="height: 8px;"></div>
+                <div style="display: flex; flex-direction: row;" class="container">
+                    <button style="width: 100px; height: 50px;" class="navbarbtn">Top 10 Attractions</button>
+                    <div style="padding-left: 40px;" class="centered">
+                        <div class="toggle3"></div>
+                        <script>
+                            const toggleBtn3 = document.querySelector(".toggle3");
+                            toggleBtn3.addEventListener("click", () => {
+                                toggleBtn3.classList.toggle("active");
+                                toggleTop10();
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div style="height: 8px;"></div>
+                <div style="display: flex; flex-direction: row;" class="container">
+                    <button style="width: 100px; height: 50px;" class="navbarbtn">Geothermal Areas</button>
+                    <div style="padding-left: 40px;" class="centered">
+                        <div class="toggle4"></div>
+                        <script>
+                            const toggleBtn4 = document.querySelector(".toggle4");
+                            toggleBtn4.addEventListener("click", () => {
+                                toggleBtn4.classList.toggle("active");
+                                toggleGeothermal();
+                            });
+                        </script>
+                    </div>
+                </div>
+                <div style="height: 8px;"></div>
+                <div style="display: flex; flex-direction: row;" class="container">
+                    <button style="width: 100px; height: 50px;" class="navbarbtn">Calderna Outline</button>
+                    <div style="padding-left: 40px;" class="centered">
+                        <div class="toggle5"></div>
+                        <script>
+                            const toggleBtn5 = document.querySelector(".toggle5");
+                            toggleBtn5.addEventListener("click", () => {
+                                toggleBtn5.classList.toggle("active");
+                                toggleCalderna();
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div style="height: 8px;"></div>
+        </div>
+
+    </div>
+
+    <div id='map'></div>
+
+    <!-- Mapbox API -->
+        <script>
+            mapboxgl.accessToken = 'pk.eyJ1IjoiZmxvcmlza3J1Z2VyNCIsImEiOiJjbGFyZnNzNzkxc3I3M3JxcnZqdjczcjYwIn0.uRSUnny-lxdfOoVn4ce2dg';
+            var map = new mapboxgl.Map({
+            container: 'map',
+            style: 'mapbox://styles/floriskruger4/cl55pyija001414kdwokkkpfw/draft',
+            center: [-110.5885, 44.4280],
+            zoom: 3
+            });
+            // bounds of the map
+            const bounds = [
+                [-112.7080, 43.6180],
+                [-108.3685, 45.5380]
+                //[-111.1559, 44.1235],
+                //[-109.8305, 45.1191]
+            ];
+            map.setMaxBounds(bounds);
+
+            const start = [-110.5885, 44.4280];
+
+            // create a function to make a directions request
+            async function getRoute(end) {
+
+            // an arbitrary start will always be the same
+            // only the end or destination will change
+            const query = await fetch(
+                `https://api.mapbox.com/directions/v5/mapbox/driving/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+                { method: 'GET' }
+            );
+            const json = await query.json();
+            const data = json.routes[0];
+            const route = data.geometry.coordinates;
+            const geojson = {
+                type: 'Feature',
+                properties: {},
+                geometry: {
+                type: 'LineString',
+                coordinates: route
+                }
+            };
+            // if the route already exists on the map, we'll reset it using setData
+            if (map.getSource('route')) {
+                map.getSource('route').setData(geojson);
+            }
+            // otherwise, we'll make a new request
+            else {
+                map.addLayer({
+                id: 'route',
+                type: 'line',
+                source: {
+                    type: 'geojson',
+                    data: geojson
+                },
+                layout: {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                paint: {
+                    'line-color': '#000000',
+                    'line-width': 3,
+                    'line-opacity': 0.75
+                }
+                });
+            }
+            // add turn instructions here at the end
+            const instructions = document.getElementById('instructions');
+            const steps = data.legs[0].steps;
+
+            let tripInstructions = '';
+            for (const step of steps) {
+            tripInstructions += `<li>${step.maneuver.instruction}</li> <h5>${Math.floor(step.duration / 60)} minutes, ${Math.floor(step.distance / 1609.344)} miles</h5>`;
+            }
+            instructions.innerHTML 
+            = `
+                <p><strong>Trip duration: ${Math.floor(data.duration / 60)} minutes 🚗💨 </strong></p>
+                <p><strong>Distance: ${Math.floor(data.distance / 1609.344)} miles </strong><p>
+                <ol>${tripInstructions}</ol>
+                `;
+            }
+           
+
+            `{% for p in pst %}`
+            var pop = new mapboxgl.Popup({offset: [0, -15]})
+                .setHTML(
+                            `<div style="margin-left: 15px; margin-right: 15px">
+                                <h2>{{ p.animal }}</h2> 
+                                <p style="font-size: 10px">{{ p.created }}</p>
+                                <img src="{{ p.image_url }}" style="width: 190px; border-radius: 5px;"/>
+                                <h3>Description:</h3>
+                                <p>{{ p.description }}</p>
+                            </div>`
+                            )
+
+            var marker = new mapboxgl.Marker({color: '#F37878'})
+                .setLngLat([`{{ p.lng }}`, `{{ p.lat }}`])
+                .setPopup(pop)
+                .addTo(map);
+            `{% endfor %}`
+            
+
+            map.on('load', () => {
+            // make an initial directions request that
+            // starts and ends at the same location
+            getRoute(start);
+
+            // Add starting point to the map
+            map.addLayer({
+                id: 'point',
+                type: 'circle',
+                source: {
+                type: 'geojson',
+                
+                data: {
+                    type: 'FeatureCollection',
+                    features: [
+                    {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                        type: 'Point',
+                        coordinates: start
+                        }
+                    }
+                    ]
+                }
+                },
+                paint: {
+                'circle-radius': 10,
+                'circle-color': '#F37878'
+                }
+            });
+            // Adding top 10 popular attractions
+            map.addLayer({
+                id: 'top10',
+                type: 'symbol',
+                source: {
+                type: 'vector',
+                url: 'mapbox://floriskruger4.09ukuzcm',
+                },
+                layout: {
+                    'visibility': 'none',
+                    'text-field': [
+                        'format', ['get', 'Attraction'],
+                        {'font-scale': 1}
+                    ],
+                },
+                'source-layer': 'PopularAttractions-4cazsc',
+                paint:{
+                    'text-color': '#000000',
+          
+                }
+            });
+            // Adding YellowMap Shape Layer
+            map.addLayer({
+                id: 'YellowStoneID',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://floriskruger4.3hg9e5rv'
+                },
+                layout: {
+                    'visibility': 'none'
+                },
+                'source-layer': 'YellowMap-a4mkuc',
+                'paint': {
+                    'fill-color': '#F5F0BB',
+                    'fill-opacity': 0.3,
+                    'fill-outline-color': '#F5F0BB',
+                }
+            })
+            map.addLayer({
+                id: 'YellowOutlineID',
+                type: 'line',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://floriskruger4.3hg9e5rv'
+                },
+                layout: {
+                    'visibility': 'visible'
+                },
+                'source-layer': 'YellowMap-a4mkuc',
+                'paint': {
+                    'line-color': '#B1AC88',
+                    'line-width': 4,
+
+                }
+            })
+            // Adding YellowTrails Routes
+            map.addLayer({
+                id: 'YellowTrailID',
+                type: 'line',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://floriskruger4.ds0xv329'
+                },
+                layout: {
+                    'visibility': 'none'
+                },
+                'source-layer': 'YellowTrails-5ymb39',
+                'paint': {
+                    'line-color': '#8A8557',
+                    'line-opacity': 0.8,
+                    'line-width': 2.3,
+
+                }
+            })
+            // Adding Geothermal Areas
+            map.addLayer({
+                id: 'YellowThermalID',
+                type: 'fill',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://floriskruger4.8bxl68dz'
+                },
+                layout: {
+                    'visibility': 'none'
+                },
+                'source-layer': 'YellowGeothermal-6mq429',
+                'paint': {
+                    'fill-color': '#F37878',
+                    'fill-opacity': 0.5,
+                    'fill-outline-color': '#F37878', 
+
+                }
+            })
+            map.addLayer({
+                id: 'YellowThermalOutlineID',
+                type: 'line',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://floriskruger4.8bxl68dz'
+                },
+                layout: {
+                    'visibility': 'none'
+                },
+                'source-layer': 'YellowGeothermal-6mq429',
+                'paint': {
+                    'line-color': '#e60000',
+                    'line-width': 0.2,
+ 
+                }
+            })
+            // Adding Calderna Shape Layer
+            map.addLayer({
+                id: 'YellowCaldernaID',
+                type: 'line',
+                source: {
+                    type: 'vector',
+                    url: 'mapbox://floriskruger4.6ld9xdnw'
+                },
+                layout: {
+                    'visibility': 'none'
+                },
+                'source-layer': 'YellowCaldera-djyins',
+                'paint': {
+                    'line-color': '#FF6C00',
+                    'line-width': 1,
+      
+                }
+            }) 
+  
+            map.on('mouseenter', 'top10', () => {
+            map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'top10', () => {
+            map.getCanvas().style.cursor = '';
+            });
+            
+
+            // when user clicks on map
+            map.on('click', (event) => {
+                const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+                    const end = {
+                    type: 'FeatureCollection',
+                    features: [
+                    {
+                        type: 'Feature',
+                        properties: {},
+                        geometry: {
+                        type: 'Point',
+                        coordinates: coords
+                        }
+                    }
+                    ]
+                };
+                if (map.getLayer('end')) {
+                    map.getSource('end').setData(end);
+                } else {
+                    map.addLayer({
+                    id: 'end',
+                    type: 'circle',
+                    source: {
+                        type: 'geojson',
+                        data: {
+                        type: 'FeatureCollection',
+                        features: [
+                            {
+                            type: 'Feature',
+                            properties: {},
+                            geometry: {
+                                type: 'Point',
+                                coordinates: coords
+                            }
+                            }
+                        ]
+                        }
+                    },
+                    paint: {
+                        'circle-radius': 5,
+                        'circle-color': '#000000'
+                    }
+                    });
+                }
+            
+                getRoute(coords);
+                displayDirections();
+
+                const features = map.queryRenderedFeatures(event.point, {
+                    layers: ['top10']
+                    });
+                    if (!features.length) {
+                    return;
+                    }
+                    const feature = features[0];
+                    
+                    const popup = new mapboxgl.Popup({ offset: [0, -15] })
+                    .setLngLat(feature.geometry.coordinates)
+                    .setHTML(
+                    `<div style="padding: 10px">
+                        <h3>${feature.properties.Attraction}</h3><p>${feature.properties.Description}</p>
+                    <img width="200" src="static/images/${feature.properties.imgName}" style="border-radius: 5px;"/>
+                    <p>Longitude: ${feature.properties.longitude}</p><p>Latitude: ${feature.properties.latitude}</p>
+                    </div>`
+                    )
+                    .addTo(map);
+            
+                });
+                            
+            });
+
+            map.on('mousemove', (e) => {
+                document.getElementById('curcoor').innerHTML = JSON.stringify(e.lngLat);
+                document.getElementById('curcoor').style.fontFamily = ("Poppins", sans-serif);
+                document.getElementById('curcoor').style.color = "black";
+            })
+
+        </script>
+
+    <!-- Side Navigation Bar -->
+    <div class="sideNav" id="mySidenav">
+        <button type="button" onclick="closeNav()" style="float: right; margin: 8px;" class="close"><i class="bi bi-x-lg"></i></button>
+        <div style="margin-left: 20px; margin-right: 20px;">
+            <h2 style="margin-left: 10px; margin-right: 10px;">Directions <i class="fa-solid fa-route" style="margin-left: 10px; position: absolute;"></i></h2>
+            <hr>
+            <div style="margin-left: 10px; margin-right: 10px; visibility: hidden;" id="instructions"></div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+
+{% endblock content %}
+
+<!--
+    AIzaSyCLk3IekhFPUjvkYv5SGESs5eByDc35R0U
+
+    https://api.mapbox.com/directions/v5/mapbox/driving/-84.518641,39.134270;-84.512023,39.102779?geometries=geojson&access_token=pk.eyJ1IjoiZmxvcmlza3J1Z2VyNCIsImEiOiJjbDR3eGVjZHExa3BnM2JxbnhmOXNwOGhnIn0.IsZaQ14yiBWyWpLz9hWkhg
+-->

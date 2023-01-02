@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    {% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YellowMap_Post_Page</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+    <!-- Mapbox Link-->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.9.1/mapbox-gl.css' rel='stylesheet' />
+
+    <!-- FontAwesome Icons Link-->
+    <script src="https://kit.fontawesome.com/564ecc7c9c.js" crossorigin="anonymous"></script>
+
+    <!-- CSS Styling -->
+    <link rel="stylesheet" href="/templates/css/posts.css" type="text/css">
+
+</head>
+
+<body style="background-color: #F1EEDF;">
+    <div style="text-align: center;">
+        <h1 style="font-family: Poppins, sans-serif;">Post Page <i class="fa-solid fa-binoculars"></i> </h1>
+
+        <div class="backBtn">
+            <a href="{% url 'home' %}">Back Home <i class="fa-sharp fa-solid fa-rotate-left" style="text-decoration: none !important;"></i> </a>
+        </div>
+        
+    </div>
+
+    <p></p>
+
+    {% for p in pst %}
+    <div class="postContainer">
+        <img src="{{ p.image_url }}" style="width: 220px; border-radius: 25px; padding: 15px"/>
+        <div style="padding: 15px;">
+            <h2>{{p.animal}}</h2>
+            <div class="break"></div>
+            {{p.description}}
+            <div class="break"></div>
+            <p></p>
+            {{p.created}}
+        </div>
+    </div>
+    <p></p>
+    {% endfor %}
+
+</body>
+
+{% endblock content %}
