@@ -15,7 +15,7 @@ SECRET_KEY = 'django-insecure-3hxlyz+(w5n0@nchasd3hsv!b-zgnt@q=a&so%k6&=0f+bwvq+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.floriskruger.com', 'yellowmap-production.up.railway.app/', '127.0.0.1']
+ALLOWED_HOSTS = ['www.floriskruger.com', 'yellowmap-production.up.railway.app', '127.0.0.1']
 
 
 # Application definition
