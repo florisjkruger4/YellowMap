@@ -1,9 +1,7 @@
 from email.policy import default
 from tokenize import blank_re
 from django.db import models
-from django_google_maps import fields as map_fields
 from django.contrib.auth.models import User
-import geocoder
 
 # Create your models here.
 class Post(models.Model):
