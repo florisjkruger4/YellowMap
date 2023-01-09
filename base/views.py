@@ -21,7 +21,7 @@ def homePage(request):
 
     pst = Post.objects.all()
 
-    context = {'form': form, 'pst': pst} 
+    context = {'form': form, 'pst': pst,} 
     return render(request, 'html/home.html', context)
 
 def postPage(request):
