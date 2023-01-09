@@ -17,6 +17,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['www.floriskruger.com', 'yellowmap-production.up.railway.app', '127.0.0.1']
 
+CSRF_TRUSTED_ORIGINS = ['yellowmap-production.up.railway.app','127.0.0.1']
+
 
 # Application definition
 
