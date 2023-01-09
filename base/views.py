@@ -5,12 +5,14 @@ from django.core.files.storage import FileSystemStorage
 from .models import Post
 from .forms import PostForm
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 def default_map(request):
     mapbox_access_token = 'pk.my_mapbox_access_token'
     return render(request, 'default.html', 
                   { 'mapbox_access_token': mapbox_access_token })
 
+@csrf_exempt
 def homePage(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
